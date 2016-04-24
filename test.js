@@ -2,6 +2,27 @@ import isAlpha from './index';
 import test from 'ava';
 
 [
+  { value: `127.0.0.1`, expected: true },
+  { value: `452.22.2`, expected: false },
+  { value: `192.168.1.1`, expected: true },
+  { value: `912.456.123.123`, expected: false },
+  { value: `000.0000.00.0`, expected: false }
+].map(Case => test(Case.value, t => t.is(isAlpha(Case.value, 'isvalidIP'), Case.expected)) );
+
+[
+  { value: `!23rt.com`, expected: false },
+  { value: `google.com`, expected: true },
+  { value: `jkdd@dks.co`, expected: false },
+  { value: `test.foo.bar`, expected: true }
+].map(Case => test(Case.value, t => t.is(isAlpha(Case.value, 'isvalidHOST'), Case.expected)) );
+
+[
+  { value: `00236a2ae558018ed13b5222ef1bd977`, expected: true },
+  { value: `boobba`, expected: false },
+  { value: `bar!34`, expected: false }
+].map(Case => test(Case.value, t => t.is(isAlpha(Case.value, 'isvalidMD5'), Case.expected)) );
+
+[
   { value: `Dude bro....`, expected: true },
   { value: `Hello 1 am an a1phanum3ric string`, expected: true },
   { value: `Hello dude I am also a string with punctuations, and stuff`, expected: true },
